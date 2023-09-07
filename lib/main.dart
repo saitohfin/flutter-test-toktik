@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:toktik/presentation/providers/discover_provider.dart';
+import 'package:toktik/presentation/screens/discover/discover_screen.dart';
 
 import 'config/them/app_theme.dart';
 
@@ -12,11 +15,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme().getTheme(),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+            lazy: false,
+            create: (_) => DiscoverProvider()..loadNextPage()),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme().getTheme(),
+        home: const DiscoverScreen(),
+      ),
     );
   }
 }
